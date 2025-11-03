@@ -1,6 +1,7 @@
 from openpyxl import load_workbook
 import pandas as pd
 
+from outils.months import month_name_to_number
 from outils.access_missingNR_table import access_missingNR_table
 from outils.apply_changes_NR import apply_changes_NR
 from outils.clean_NR_with_no_data import clean_NR_with_no_data
@@ -24,6 +25,11 @@ missingNR_df_new = access_missingNR_table(missingNR_df, version_cell_new)
 
 df_old_wv = copy_values(old_wb, df_old, key="name_ranges")
 missingNR_df_old_values = copy_values(old_wb, missingNR_df_old, key=None)
+
+if(version_cell == "1.0.0"): # changing months from names to numbers in version 1.0.0
+    months = [0,1,6]
+    for i in months:
+        missingNR_df_old_values[i][1][0] = month_name_to_number(missingNR_df_old_values[i][1][0])
 
 df_old_tomerge = df_old_wv[["name_ranges", "cell_values"]]
 df_old_tomerge = apply_changes_NR(df_old_tomerge, version_cell, version_cell_new) # apply migration NR changes

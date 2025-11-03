@@ -13,13 +13,9 @@ It ensures that all Named Ranges (NRs) and data cells with missing ranges are tr
 ## Repository Structure
 vsme-template-migration/
 │
-
 ├── main.py                         # Main migration script
-
 ├── Template/
-
 │   └── VSME-Digital-Template-1.1.1.xlsx    # Latest VSME template version
-
 │
 ├── outils/                         # Utility modules for core operations
 

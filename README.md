@@ -10,28 +10,6 @@ It ensures that all Named Ranges (NRs) and data cells with missing ranges are tr
 - Handles renamed NRs and the non-referenced data cells
 - Saves a new .xlsx ("result_from_1.*.*.xlsx") file ready for use with the latest VSME Digital Template
 
-## Repository Structure
-vsme-template-migration/
-│
-├── main.py                         # Main migration script
-├── Template/
-│   └── VSME-Digital-Template-1.1.1.xlsx    # Latest VSME template version
-│
-├── outils/                         # Utility modules for core operations
-│   ├── check_template_fill.py
-│   ├── months.py
-│   ├── access_missingNR_table.py
-│   ├── apply_changes_NR.py
-│   ├── clean_NR_with_no_data.py
-│   ├── paste_values.py
-│   ├── access_NR_table.py
-│   ├── copy_values.py
-│
-├── pickles/
-│   └── missingNR_df.py             # Pickled with references of data cells with no NRs
-│
-└── README.md                       # Documentation 
-
 ## Requirements
 1. Python environment and dependencies:
    - openpyxl: Read/write Excel 2010 xlsx/xlsm/xltx/xltm files

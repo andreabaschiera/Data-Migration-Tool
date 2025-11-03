@@ -17,8 +17,8 @@ def apply_changes_NR(df, version_cell, version_cell_new):
     df = df.merge(df_of_changes_NR, on="name_ranges", how="left")
 
     for i in range(len(df)):
-        if pd.notna(df["name_ranges_new"][i]):
-            df["name_ranges"][i] = df["name_ranges_new"][i]
+        if pd.notna(df.loc[i, "name_ranges_new"]):
+            df.loc[i, "name_ranges"] = df.loc[i, "name_ranges_new"]
     
     df = df.drop(columns=["name_ranges_new"])
 

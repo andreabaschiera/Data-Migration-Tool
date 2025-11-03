@@ -19,48 +19,49 @@ def paste_values(pyxl, df, NR=None):
 
     for i in range(len(df)):
 
+        df_row = df["cell_values"][i]
+        df_shapes = df["cell_shapes"][i]
+
         sheet = pyxl[df["sheets"][i]]
 
-        if len(df["cell_shapes"][i]) == 2:
+        if len(df_shapes) == 2:
 
-            if df["cell_values"][i] is not None:
-                sheet[df["cell_ranges"][i]].value = df["cell_values"][i][0][0]
+            if df_row is not None:
+                sheet[df["cell_ranges"][i]].value = df_row[0][0]
         else:
 
-            tuple_to_check = (df["cell_shapes"][i][0], df["cell_shapes"][i][1]) 
-            print(f"Values: {df['cell_ranges'][i]} in sheet: {df['sheets'][i]}")
+            tuple_to_check = (df_shapes[0], df_shapes[1]) 
 
-            if df["cell_values"][i] is not None: # avoiding formulas
+            if df_row is not None: # avoiding formulas
 
                 if tuple_to_check in merged_loc[df["sheets"][i]].values.tolist(): # merged cells check
 
-                    print(f"Merged detected: {tuple_to_check}; sheet: {df['sheets'][i]}")
-                    for j in range(len(df["cell_values"][i])):
-                        df["cell_values"][i][j] = [df["cell_values"][i][j][0]] # keeping only the first value of each row
+                    for j in range(len(df_row)):
+                        df_row[j] = [df_row[j][0]] # keeping only the first value of each row
 
-                    if len(df["cell_shapes"][i]) == (df["cell_shapes"][i][3]+1 - df["cell_shapes"][i][1]): # enlarged ranges check
-                        for row in range(df["cell_shapes"][i][1], df["cell_shapes"][i][3] + 1):
-                            sheet.cell(row=row, column=df["cell_shapes"][i][0]).value = df["cell_values"][i][row - df["cell_shapes"][i][1]][0]
+                    if len(df_shapes) == (df_shapes[3]+1 - df_shapes[1]): # enlarged ranges check
+                        for row in range(df_shapes[1], df_shapes[3] + 1):
+                            sheet.cell(row=row, column=df_shapes[0]).value = df_row[row - df_shapes[1]][0]
                     else:
-                        for j in range(df["cell_shapes"][i][3]+1 - df["cell_shapes"][i][1] - len(df["cell_values"][i])):
-                            df["cell_values"][i].append([None])
-                        for row in range(df["cell_shapes"][i][1], df["cell_shapes"][i][3] + 1):
-                            sheet.cell(row=row, column=df["cell_shapes"][i][0]).value = df["cell_values"][i][row - df["cell_shapes"][i][1]][0]
+                        for j in range(df_shapes[3]+1 - df_shapes[1] - len(df_row)):
+                            df_row.append([None])
+                        for row in range(df_shapes[1], df_shapes[3] + 1):
+                            sheet.cell(row=row, column=df_shapes[0]).value = df_row[row - df_shapes[1]][0]
 
                 else:
 
-                    if len(df["cell_shapes"][i]) == (df["cell_shapes"][i][3]+1 - df["cell_shapes"][i][1]):
-                        for row in range(df["cell_shapes"][i][1], df["cell_shapes"][i][3] + 1):
-                            for col in range(df["cell_shapes"][i][0], df["cell_shapes"][i][2] + 1):
-                                sheet.cell(row=row, column=col).value = df["cell_values"][i][row - df["cell_shapes"][i][1]][col - df["cell_shapes"][i][0]]
+                    if len(df_shapes) == (df_shapes[3]+1 - df_shapes[1]):
+                        for row in range(df_shapes[1], df_shapes[3] + 1):
+                            for col in range(df_shapes[0], df_shapes[2] + 1):
+                                sheet.cell(row=row, column=col).value = df_row[row - df_shapes[1]][col - df_shapes[0]]
                     else:
-                        for j in range(df["cell_shapes"][i][3]+1 - df["cell_shapes"][i][1] - len(df["cell_values"][i])):
-                            df["cell_values"][i].append([None])
+                        for j in range(df_shapes[3]+1 - df_shapes[1] - len(df_row)):
+                            df_row.append([None])
                         if NR is not None: # only for name ranges (not for missing NRs)
                             if df["name_ranges"][i] in add_checkbox:
-                                for j in range(len(df["cell_values"][i])):
-                                    if df["cell_values"][i][j][0] is None:
-                                        df["cell_values"][i][j][0] = False
-                        for row in range(df["cell_shapes"][i][1], df["cell_shapes"][i][3] + 1):
-                            for col in range(df["cell_shapes"][i][0], df["cell_shapes"][i][2] + 1):
-                                sheet.cell(row=row, column=col).value = df["cell_values"][i][row - df["cell_shapes"][i][1]][col - df["cell_shapes"][i][0]]
+                                for j in range(len(df_row)):
+                                    if df_row[j][0] is None:
+                                        df_row[j][0] = False
+                        for row in range(df_shapes[1], df_shapes[3] + 1):
+                            for col in range(df_shapes[0], df_shapes[2] + 1):
+                                sheet.cell(row=row, column=col).value = df_row[row - df_shapes[1]][col - df_shapes[0]]

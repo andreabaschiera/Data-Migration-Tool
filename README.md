@@ -22,6 +22,6 @@ If the selected workbook is not recognized as a valid VSME template, the script 
 Some formatting (like checkboxes and arrows to navigate tabs) are not transferred.
 
 ## Authors
-Developed by EFRAG's Digital Team
-Maintained by EFRAG's Digital Team
+Developed by EFRAG's Digital Team.
+Maintained by EFRAG's Digital Team.
 For inquiries or support, contact: andrea.baschiera@efrag.org / thibault.magro@efrag.org

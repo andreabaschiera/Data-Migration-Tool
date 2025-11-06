@@ -77,8 +77,3 @@ for i in range(1000000):
     pass
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.4f} seconds")
-
-
-
-# anti_join = df_old[~df_old['name_ranges'].isin(df_new['name_ranges'])]
-# print(anti_join)
